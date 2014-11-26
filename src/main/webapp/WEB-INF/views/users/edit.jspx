@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" 
+     xmlns:c="http://java.sun.com/jsp/jstl/core" 
+     xmlns:spring="http://www.springframework.org/tags"
+     xmlns:form="http://www.springframework.org/tags/form"
+     version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <spring:eval expression="user.id == null ? 'Новый пользователь':'Редактирование'" var="formTitle"/>
+    <h1>${formTitle}</h1>
+
+    <spring:eval expression="user.id == null ? '/users/?form':'/users/' + user.id + '?form'" var="address"/>
+
+
+    <div id="userUpdate">
+    <form:form modelAttribute="user" id="userUpdateForm" method="POST" action="${address}" >
+
+        <c:if test="${not empty message}">
+            <div id="message" class="${message.type}">${message.message}</div>
+        </c:if>
+
+        <form:hidden path="id" />
+
+        <form:label path="name">
+            Имя
+        </form:label>
+        <form:input path="name" />
+        <div>
+            <form:errors path="name" cssClass="error" />
+        </div>
+        <p/>
+
+        <form:label path="age">
+            Возраст
+        </form:label>
+        <form:input path="age" />
+        <div>
+            <form:errors path="age" cssClass="error" />
+        </div>
+        <p/>    
+
+        <form:label path="admin">
+            Права администратора
+        </form:label>
+        <form:checkbox path="admin" />
+        <div>
+            <form:errors path="admin" cssClass="error" />
+        </div>        
+        <p/>
+
+
+        <!--form:hidden path="createdDate" /-->
+        
+        <button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+            <span class="ui-button-text">Save</span>
+        </button> 
+        <button type="reset" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+            <span class="ui-button-text">Reset</span>
+        </button>           
+                      
+    </form:form>   
+    </div>
+
+</div>
